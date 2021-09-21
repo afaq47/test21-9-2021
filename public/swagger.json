@@ -1,0 +1,865 @@
+{
+	"components": {
+		"examples": {},
+		"headers": {},
+		"parameters": {},
+		"requestBodies": {},
+		"responses": {},
+		"schemas": {
+			"IUser": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"user_name": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"type": {
+						"type": "string"
+					},
+					"roles": {
+						"items": {
+							"type": "string"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"_id",
+					"user_name",
+					"password",
+					"type"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAddCurtResponse": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"name": {
+						"type": "string"
+					},
+					"user": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/IUser"
+							},
+							{}
+						]
+					},
+					"address": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"_id",
+					"name",
+					"user",
+					"address"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAddCurtRequest": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"address": {
+						"type": "string"
+					},
+					"user_name": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name",
+					"address",
+					"user_name",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ILoginResponse": {
+				"properties": {
+					"token_key": {
+						"type": "string"
+					},
+					"message": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"token_key",
+					"message"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ILoginRequest": {
+				"properties": {
+					"username": {
+						"type": "string",
+						"enum": [
+							"admin"
+						],
+						"nullable": false
+					},
+					"password": {
+						"type": "string",
+						"enum": [
+							"admin"
+						],
+						"nullable": false
+					}
+				},
+				"required": [
+					"username",
+					"password"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"_LeanDocument__LeanDocument_T__": {
+				"properties": {},
+				"type": "object"
+			},
+			"Pick__LeanDocument_T_.Exclude_keyof_LeanDocument_T_.Exclude_keyofDocument._id-or-id-or-__v_-or-%24isSingleNested__": {
+				"properties": {
+					"_id": {
+						"$ref": "#/components/schemas/_LeanDocument__LeanDocument_T__",
+						"description": "This documents _id."
+					},
+					"__v": {
+						"description": "This documents __v."
+					},
+					"id": {
+						"description": "The string version of this documents _id."
+					}
+				},
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"Omit__LeanDocument_this_.Exclude_keyofDocument._id-or-id-or-__v_-or-%24isSingleNested_": {
+				"$ref": "#/components/schemas/Pick__LeanDocument_T_.Exclude_keyof_LeanDocument_T_.Exclude_keyofDocument._id-or-id-or-__v_-or-%24isSingleNested__",
+				"description": "Construct a type with the properties of T except for those in type K."
+			},
+			"LeanDocument_this_": {
+				"$ref": "#/components/schemas/Omit__LeanDocument_this_.Exclude_keyofDocument._id-or-id-or-__v_-or-%24isSingleNested_"
+			},
+			"IProductMenu": {
+				"$ref": "#/components/schemas/LeanDocument_this_"
+			},
+			"ISingleOrderItem": {
+				"properties": {
+					"item": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{
+								"$ref": "#/components/schemas/IProductMenu"
+							}
+						]
+					},
+					"quantity": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"item",
+					"quantity"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IOrder": {
+				"properties": {
+					"_id": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{}
+						]
+					},
+					"curt": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{}
+						]
+					},
+					"items": {
+						"anyOf": [
+							{
+								"items": {
+									"$ref": "#/components/schemas/ISingleOrderItem"
+								},
+								"type": "array"
+							},
+							{}
+						]
+					},
+					"quantity": {
+						"type": "number",
+						"format": "double"
+					},
+					"order_status": {
+						"type": "string"
+					},
+					"createdAt": {
+						"anyOf": [
+							{
+								"type": "string",
+								"format": "date-time"
+							},
+							{}
+						]
+					},
+					"updatedAt": {
+						"anyOf": [
+							{
+								"type": "string",
+								"format": "date-time"
+							},
+							{}
+						]
+					}
+				},
+				"required": [
+					"_id",
+					"curt",
+					"items",
+					"quantity",
+					"order_status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IOrderBill": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"order_id": {
+						"anyOf": [
+							{
+								"$ref": "#/components/schemas/IOrder"
+							},
+							{}
+						]
+					},
+					"total_price": {
+						"type": "number",
+						"format": "double"
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/ISingleOrderItem"
+						},
+						"type": "array"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"_id",
+					"order_id",
+					"total_price",
+					"items"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"ITakeOrderRequest": {
+				"properties": {
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/ISingleOrderItem"
+						},
+						"type": "array"
+					}
+				},
+				"required": [
+					"items"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IGetOrderResponse": {
+				"properties": {
+					"_id": {
+						"anyOf": [
+							{
+								"type": "string"
+							},
+							{}
+						]
+					},
+					"items": {
+						"items": {
+							"$ref": "#/components/schemas/ISingleOrderItem"
+						},
+						"type": "array"
+					},
+					"order_status": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"_id",
+					"items",
+					"order_status"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAdminSaveAndUpdateWaiterRes": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"FirstName": {
+						"type": "string"
+					},
+					"LastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"Desgination": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"_id",
+					"FirstName",
+					"LastName",
+					"email",
+					"password",
+					"Desgination",
+					"createdAt",
+					"updatedAt"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IAdminCreateWaiterReq": {
+				"properties": {
+					"FirstName": {
+						"type": "string"
+					},
+					"LastName": {
+						"type": "string"
+					},
+					"email": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"Desgination": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"FirstName",
+					"LastName",
+					"email",
+					"password",
+					"Desgination"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IProductMenuSaveAndUpdateRes": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"itemName": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					},
+					"createdAt": {
+						"type": "string"
+					},
+					"updatedAt": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"_id",
+					"itemName",
+					"price"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IProductMenuCreateReq": {
+				"properties": {
+					"itemName": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"itemName",
+					"price"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IProducMenutUpdateReq": {
+				"properties": {
+					"_id": {
+						"type": "string"
+					},
+					"itemName": {
+						"type": "string"
+					},
+					"price": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"required": [
+					"_id",
+					"itemName",
+					"price"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IProductMenuDeleteReq": {
+				"properties": {
+					"id": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"id"
+				],
+				"type": "object",
+				"additionalProperties": false
+			}
+		},
+		"securitySchemes": {
+			"api_key": {
+				"type": "http",
+				"name": "access_token",
+				"in": "headers",
+				"scheme": "Bearer"
+			}
+		}
+	},
+	"info": {
+		"title": "testparctics",
+		"version": "1.0.0",
+		"license": {
+			"name": "ISC"
+		},
+		"contact": {}
+	},
+	"openapi": "3.0.0",
+	"paths": {
+		"/Curt/addcurt": {
+			"post": {
+				"operationId": "Addcurt",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IAddCurtResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Curt"
+				],
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IAddCurtRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/login": {
+			"post": {
+				"operationId": "Login",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/ILoginResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Login"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ILoginRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/order/takeOrder": {
+			"post": {
+				"operationId": "TakeOrder",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IOrderBill"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Order"
+				],
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/ITakeOrderRequest"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/order/viewOrders": {
+			"get": {
+				"operationId": "ViewOrders",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IGetOrderResponse"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Order"
+				],
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": []
+			}
+		},
+		"/order/updateOrderStatus": {
+			"put": {
+				"operationId": "UpdateStatus",
+				"responses": {
+					"200": {
+						"description": "Status Updated",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IOrder"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"Order"
+				],
+				"security": [
+					{
+						"api_key": []
+					}
+				],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"properties": {
+									"status": {
+										"type": "string",
+										"enum": [
+											"waiting",
+											"completed"
+										]
+									},
+									"_id": {
+										"type": "string"
+									}
+								},
+								"required": [
+									"status",
+									"_id"
+								],
+								"type": "object"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/createUser": {
+			"put": {
+				"operationId": "CreateUser",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IAdminSaveAndUpdateWaiterRes"
+								}
+							}
+						}
+					}
+				},
+				"summary": "This will Add user to the system",
+				"tags": [
+					"Admin"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IAdminCreateWaiterReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/createProductMenu": {
+			"post": {
+				"operationId": "CreateProductMenu",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IProductMenuSaveAndUpdateRes"
+								}
+							}
+						}
+					}
+				},
+				"summary": "This will create Product to the system",
+				"tags": [
+					"Admin"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IProductMenuCreateReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/updateProductMenuDetail": {
+			"put": {
+				"operationId": "UpdateProductMenu",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IProductMenuSaveAndUpdateRes"
+								}
+							}
+						}
+					}
+				},
+				"summary": "This will update Product to the system",
+				"tags": [
+					"Admin"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IProducMenutUpdateReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/deleteProductMenu": {
+			"delete": {
+				"operationId": "DeleteProductMenu",
+				"responses": {
+					"200": {
+						"description": "Product deleted",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IProductMenuSaveAndUpdateRes"
+								}
+							}
+						}
+					}
+				},
+				"summary": "This will delete Product to the system",
+				"tags": [
+					"Admin"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IProductMenuDeleteReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/admin/getProductMenuList": {
+			"get": {
+				"operationId": "GetProductMenuList",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IProductMenuSaveAndUpdateRes"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"summary": "This will get Product to the system",
+				"tags": [
+					"Admin"
+				],
+				"security": [],
+				"parameters": []
+			}
+		}
+	},
+	"servers": [
+		{
+			"url": "/"
+		}
+	]
+}
